@@ -131,3 +131,10 @@ output-virtualbox-iso
 # Ignore grafanalib output
 /graphs/__pycache__/
 /graphs/*.json
+
+# Infrastructure
+secrets.sh
+.terraform/
+.terraform.*
+terraform.*
+userconfig.txt

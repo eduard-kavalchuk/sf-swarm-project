@@ -1,0 +1,21 @@
+---
+- hosts: swarm-manager
+  vars:
+    homedir: /home/ed/
+  gather_facts: no
+  become: true
+
+  tasks:
+  - name: Copy docker-compose.yml to VM
+    ansible.builtin.copy:
+      src:  "../../deploy/docker-compose/docker-compose.yml"
+      dest: "{{ homedir }}"
+
+  - name: Install and initialize docker swarm and deploy the socks service
+    shell: |
+      curl -fsSL https://get.docker.com | sh
+      sudo apt install -y docker-compose
+      docker swarm init
+      docker stack deploy --compose-file ./docker-compose.yml sockshop-swarm
+    args:
+      chdir: "{{ homedir }}"
